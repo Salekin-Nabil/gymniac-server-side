@@ -23,7 +23,7 @@ async function run() {
             const products = await cursor.toArray();
             res.send(products);
         });
-
+        //Single Product GET API
         app.get('/products/:id', async(req, res)=>{
             const id = req.params.id;
             console.log(id);
@@ -32,17 +32,25 @@ async function run() {
             res.send(product);
         });
 
-        //POST
+        //Products POST API
         app.post('/products', async (req, res)=>{
             const newProduct = req.body;
             const product = await productCollection.insertOne(newProduct);
             res.send(product);
         });
+        //Stocks POST API
         app.post('/stock', async (req, res)=>{
             const newStock = req.body;
             const stock = await stockCollection.insertOne(newStock);
             res.send(stock);
         });
+        //Products DELETE API
+        app.delete('products/:id', async (req, res)=>{
+            const id = req.params.id;
+            const query = {_id: ObjectId(id)};
+            const products = await productCollection.deleteOne(query);
+            res.send(products);
+        })
     }
     finally{
 
