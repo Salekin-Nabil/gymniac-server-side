@@ -15,6 +15,21 @@ async function run() {
     try{
         await client.connect();
         const productCollection = client.db('gymniac').collection('product');
+
+        //Products API
+        app.get('/products', async (req, res)=>{
+            const cursor = productCollection.find({});
+            const products = await cursor.toArray();
+            res.send(products);
+        })
+
+        app.get('/products/:id', async(req, res)=>{
+            const id = req.params.id;
+            console.log(id);
+            const query = {_id: ObjectId(id)};
+            const product = await productCollection.findOne(query);
+            res.send(product);
+        })
     }
     finally{
 
