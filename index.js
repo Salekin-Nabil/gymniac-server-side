@@ -64,7 +64,6 @@ async function run() {
         app.get('/myProducts', verifyJWT, async (req, res) => {
             const decodedEmail = req.decoded.email;
             const supplier = req.query.supplier;
-            console.log(supplier);
             if (supplier === decodedEmail) {
                 const query = { supplier: supplier };
                 const cursor = productCollection.find(query);
